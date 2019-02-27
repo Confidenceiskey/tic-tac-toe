@@ -9,7 +9,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -21,6 +20,15 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.App-body {
+  font-family: "Gloria Hallelujah", cursive;
+}
+
+.App-body h1 {
+  font-size: 4em;
+  line-height: 1.1;
 }
 
 @keyframes App-logo-spin {

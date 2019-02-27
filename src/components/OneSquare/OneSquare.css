@@ -1,0 +1,16 @@
+.board-font {
+	font-family: 'Indie Flower', cursive;
+  font-size: 6em;
+  margin: 0;
+  line-height: 1;
+}
+
+.each-square {
+  width: 100px;
+  height: 100px;
+}
+
+.square-container {
+  display: flex;
+  justify-content: center;
+}

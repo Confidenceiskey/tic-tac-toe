@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import OneSquare from '../components/OneSquare/OneSquare';
 import './App.css';
 
 class App extends Component {
@@ -8,8 +9,9 @@ class App extends Component {
         <header className="App-header">
           <img className="App-logo" alt="logo" />
         </header>
-        <body>
-          <h1>WELCOME</h1>
+        <body className="App-body">
+          <h1>TIC TAC TOE</h1>
+          <OneSquare />
         </body>
       </div>
     );

@@ -6,7 +6,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rebeccapurple;
+  background-color: #fff;
+  background-image: url("./assets/brick-wall.png");
   color: aliceblue;
 }
 

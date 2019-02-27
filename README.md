@@ -12,6 +12,7 @@ _This project is part of the [freeCodeCamp legacy curriculum](https://www.freeco
 #### Made with
 - HTML, CSS, JavaScript & React
 - Favicon made by [Freepik](http://www.freepik.com) from [www.flaticon.com](https://www.flaticon.com/) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
+- Background image from [Transparent Textures](https://www.transparenttextures.com)
 
 
 #### Preview
