@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import OneSquare from '../components/OneSquare/OneSquare';
 import GameBoard from '../components/GameBoard/GameBoard';
 import './App.css';
 
@@ -21,7 +20,6 @@ class App extends Component {
         <main className="App-main">
           <h1>TIC TAC TOE</h1>
           <GameBoard gameBoard={gameBoard}/>
-          <OneSquare />
         </main>
       </div>
     );

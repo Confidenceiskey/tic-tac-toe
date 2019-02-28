@@ -1,9 +1,10 @@
 import React from 'react';
+import './GameBoard.css';
 import OneSquare from '../OneSquare/OneSquare';
 
 const GameBoard = ({ gameBoard }) => {
 	return (
-    <div>
+    <div className="entireBoard">
       {
         gameBoard.map((boardValue, i) => {
           return (
