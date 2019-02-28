@@ -1,5 +1,17 @@
 .entireBoard {
-	display: grid;
-  grid-template-columns: 100px 100px 100px;
+  display: flex;
   justify-content: center;
+}
+
+.frame {
+  padding: 140px 30px 20px 30px;
+  background-color: black;
+}
+
+.outsideGameArea {
+  display: grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-gap: 5px;
+  background-color: gray;
+  width: 310px;
 }

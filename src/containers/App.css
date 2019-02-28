@@ -24,6 +24,7 @@
 
 .App-main {
   font-family: "Gloria Hallelujah", cursive;
+  justify-content: center;
 }
 
 .App-main h1 {
