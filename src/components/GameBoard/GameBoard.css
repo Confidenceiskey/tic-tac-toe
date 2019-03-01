@@ -5,13 +5,13 @@
 
 .frame {
   padding: 140px 30px 20px 30px;
-  background-color: black;
+  background-color: #1a1a1a;
 }
 
 .outsideGameArea {
   display: grid;
   grid-template-columns: 100px 100px 100px;
   grid-gap: 5px;
-  background-color: gray;
+  background-color: #2e2e2e;
   width: 310px;
 }
