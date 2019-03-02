@@ -1,17 +1,21 @@
-.entireBoard {
+/*.entireBoard {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-}
+}*/
 
-.frame {
-  padding: 140px 30px 20px 30px;
+.outsideGameArea {
+  padding: 20px 30px;
   background-color: #1a1a1a;
 }
 
-.outsideGameArea {
+.gridLines {
   display: grid;
   grid-template-columns: 100px 100px 100px;
   grid-gap: 5px;
   background-color: #2e2e2e;
+}
+
+.outsideGameArea, .gridLines {
   width: 310px;
 }

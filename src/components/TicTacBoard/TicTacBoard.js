@@ -1,12 +1,12 @@
 import React from 'react';
-import './GameBoard.css';
+import './TicTacBoard.css';
 import OneSquare from '../OneSquare/OneSquare';
 
-const GameBoard = ({ gameBoard }) => {
+const TicTacBoard = ({ gameBoard }) => {
 	return (
-    <div className="entireBoard">
-      <div className="frame">
-        <div className="outsideGameArea">
+    // <div className="entireBoard">
+      <div className="outsideGameArea">
+        <div className="gridLines">
           {
             gameBoard.map((boardValue, i) => {
               return (
@@ -19,8 +19,8 @@ const GameBoard = ({ gameBoard }) => {
           }
         </div>
       </div>
-    </div>
+    // </div>
   );
 }
 
-export default GameBoard;
+export default TicTacBoard;

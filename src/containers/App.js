@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GameBoard from '../components/GameBoard/GameBoard';
+import EntireBoard from '../components/EntireBoard/EntireBoard';
 import './App.css';
 
 class App extends Component {
@@ -15,11 +15,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img className="App-logo" alt="logo" />
+          <h1>TIC TAC TOE</h1>
         </header>
         <main className="App-main">
-          <h1>TIC TAC TOE</h1>
-          <GameBoard gameBoard={gameBoard}/>
+          <EntireBoard gameBoard={gameBoard}/>
         </main>
       </div>
     );
