@@ -41,3 +41,21 @@
     transform: rotate(360deg);
   }
 }*/
+
+@media (min-width: 551px) and (max-width: 700px) {
+  .App-header h1 {
+    font-size: 3.5em;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 550px) {
+  .App-header h1 {
+    font-size: 3em;
+  }
+}
+
+@media (max-width: 449px) {
+  .App-header h1 {
+    font-size: 2.5em;
+  }
+}
