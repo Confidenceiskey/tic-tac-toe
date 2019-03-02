@@ -1,8 +1,6 @@
 .frame {
   padding: 10px;
-  background-color: #b3b3b3;
-  background-color: #925652;
-  /*border: 1px solid #696969;*/
-  border: 1px solid #8c8c8c;
-  box-shadow: 0 2px 4px 0 hsla(0, 0%, 0%, 0.6);
+  background-color: #f4a662;
+  border: 1px solid #f18e37;
+  box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.6);
 }

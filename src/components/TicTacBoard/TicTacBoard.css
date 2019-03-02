@@ -1,9 +1,3 @@
-/*.entireBoard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}*/
-
 .outsideGameArea {
   padding: 20px 30px;
   background-color: #1a1a1a;

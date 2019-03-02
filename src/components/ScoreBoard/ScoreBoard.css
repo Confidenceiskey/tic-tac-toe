@@ -1,5 +1,45 @@
 .scoreBoard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 40px 70px;
   width: 370px;
-  height: 140px;
+  height: 110px;
   background-color: #1a1a1a;
+}
+
+.scoreBoard h3, .scoreTally {
+  margin: 0px;
+  font-family: 'Gloria Hallelujah', 'Indie flower', serif;
+  text-align: left;
+  line-height: 1;
+}
+
+.scoreBoard h3 {
+  padding: 5px 20px;
+  font-weight: 400;
+  font-size: 1.3em;
+  align-self: center;
+  /*color: #999;*/
+  color: #4c4d00;
+}
+
+.scoreBoard h3:nth-child(2) {
+  text-align: right;
+}
+
+/* Use Yellow (#ffff00) indicating turn */
+.scoreTally {
+  font-size: 2.4em;
+  font-weight: 800;
+  margin-top: -4px;
+  padding-left: 43px;
+  align-self: start;
+  /*color: #d9d9d9;*/
+  /*color: #bfbfbf;*/
+  color: #4c4d00;
+}
+
+.scoreBoard p:nth-child(4) {
+  text-align: right;
+  padding-right: 63px;
 }
