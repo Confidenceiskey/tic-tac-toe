@@ -3,13 +3,12 @@ import './Frame.css';
 import ScoreBoard from '../ScoreBoard/ScoreBoard';
 import TicTacBoard from '../TicTacBoard/TicTacBoard';
 
-const Frame = ({ gameBoard }) => {
+const Frame = (props) => {
   return (
     <div className='frame'> 
-      <ScoreBoard />
-      <TicTacBoard gameBoard={gameBoard} />
+      {props.children}
     </div>
-    );
+  );
 }
 
 export default Frame;

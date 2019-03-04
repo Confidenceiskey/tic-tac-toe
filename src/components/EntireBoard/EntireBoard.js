@@ -2,10 +2,10 @@ import React from 'react';
 import './EntireBoard.css';
 import Frame from '../Frame/Frame';
 
-const EntireBoard = ({ gameBoard }) => {
+const EntireBoard = (props) => {
 	return (
     <div className="entireBoard">
-      <Frame gameBoard={ gameBoard } /> 
+      {props.children}
     </div>
   );
 }
