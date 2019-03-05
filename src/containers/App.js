@@ -22,9 +22,11 @@ class App extends Component {
     gameState[squareRef] = this.state.playerSide;
 
     this.setState({
-      gameBoard: gameState
+      gameBoard: gameState,
+      playerTurn: false
     })
-   }
+  }
+    
 
   render() {
     const { gameBoard } = this.state;
