@@ -27,8 +27,11 @@
 }
 
 .App-header h1 {
-  font-family: "Gloria Hallelujah", cursive;
   font-size: 4em;
+}
+
+.App-header h1, .App-footer {
+  font-family: "Gloria Hallelujah", cursive;
   line-height: 1.1;
   color: #ffffe0;
 }
@@ -41,6 +44,12 @@
     transform: rotate(360deg);
   }
 }*/
+
+.App-footer {
+  font-size: 1.35em;
+  padding-top: 15px;
+  font-weight: 600;
+}
 
 @media (min-width: 551px) and (max-width: 700px) {
   .App-header h1 {

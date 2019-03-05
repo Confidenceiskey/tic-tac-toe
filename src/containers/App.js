@@ -94,6 +94,9 @@ class App extends Component {
             </Frame>
           </EntireBoard>
         </main>
+        <footer className="App-footer">
+          <p>Designed by David Nowak</p>
+        </footer>
       </div>
     );
   }
