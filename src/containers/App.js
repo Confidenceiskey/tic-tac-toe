@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       gameBoard: Array(9).fill(''),
       playerSide: "X",
+      computerSide: "O",
       playerTurn: true
     }
   }
