@@ -44,16 +44,20 @@ class App extends Component {
       return !isNaN(square);
     })
 
-    //Assigns a random Number for the computer AI's next move
-    const randNum = Math.floor((Math.random() * availableSquares.length));
+    if (availableSquares.length === 0) {
+      console.log('Game Over!')
+    } else {
+      //Assigns a random Number for the computer AI's next move
+      const randNum = Math.floor((Math.random() * availableSquares.length));
 
-    //Sets the randomly picked available square as the
-    //computer's turn
-    gameState[availableSquares[randNum]] = this.state.computerSide;
+      //Sets the randomly picked available square as the
+      //computer's turn
+      gameState[availableSquares[randNum]] = this.state.computerSide;
 
-    //Updates state to reflect the gameboard & whose 
-    //turn it is
-    this.updateState(gameState);
+      //Updates state to reflect the gameboard & whose 
+      //turn it is
+      this.updateState(gameState);
+    }
   }
 
   //Updates game state after each turn
