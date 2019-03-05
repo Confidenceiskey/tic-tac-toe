@@ -23,10 +23,35 @@ class App extends Component {
 
     this.setState({
       gameBoard: gameState,
-      playerTurn: false
+      playerTurn: !this.state.playerTurn
+    })
+
+    this.computerMove(gameState);
+  } 
+
+  computerMove = (gameState) => {
+    const availableSquares = gameState.map((square, i) => {
+      if (square === "") {
+        return square + i;
+      } else {
+        return square;
+      }
+    }).filter(square => {
+      return !isNaN(square);
+    })
+
+    const randNum = Math.floor((Math.random() * availableSquares.length));
+
+    gameState[availableSquares[randNum]] = this.state.computerSide;
+
+    console.log("avail Squares ", availableSquares);
+    console.log("randNum ", randNum);
+    console.log(gameState);
+    this.setState({
+      gameBoard: gameState,
+      playerTurn: !this.state.playerTurn
     })
   }
-    
 
   render() {
     const { gameBoard } = this.state;
