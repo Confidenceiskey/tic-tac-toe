@@ -1,10 +1,10 @@
 import React from 'react';
 import './OneSquare.css';
 
-const OneSquare = ({ value }) => {
+const OneSquare = ({ id, value, onClick }) => {
 	return (
-		<div className="each-square">
-      <p className="board-font">{value}</p>
+		<div className="each-square" onClick={onClick}>
+      <p className="board-font" id={id}>{value}</p>
     </div>
 	);
 }

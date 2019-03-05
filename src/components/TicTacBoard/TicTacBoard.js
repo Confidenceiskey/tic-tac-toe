@@ -2,7 +2,7 @@ import React from 'react';
 import './TicTacBoard.css';
 import OneSquare from '../OneSquare/OneSquare';
 
-const TicTacBoard = ({ gameBoard }) => {
+const TicTacBoard = ({ gameBoard, playerMove }) => {
 	return (
     <div className="outsideGameArea">
       <div className="gridLines">
@@ -11,7 +11,9 @@ const TicTacBoard = ({ gameBoard }) => {
             return (
               <OneSquare
                 key={i}
+                id={i}
                 value={gameBoard[i]}
+                onClick={playerMove}
               />
             )
           })

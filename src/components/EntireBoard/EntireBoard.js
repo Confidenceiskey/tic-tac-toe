@@ -1,6 +1,5 @@
 import React from 'react';
 import './EntireBoard.css';
-import Frame from '../Frame/Frame';
 
 const EntireBoard = (props) => {
 	return (

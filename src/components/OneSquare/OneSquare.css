@@ -4,10 +4,10 @@
   margin: 0;
   line-height: 1;
   color: #e6e6e6;
+  width: 100px;
+  height: 100px;
 }
 
 .each-square {
-  width: 100px;
-  height: 100px;
   background-color: #1a1a1a;
 }

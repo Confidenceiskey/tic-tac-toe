@@ -9,10 +9,22 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      gameBoard: ['X', 'O', 'X', 'O', 'X', 'O', 'X', 'X', 'O'],
-      playerSide: "X"
+      gameBoard: Array(9).fill(''),
+      playerSide: "X",
+      playerTurn: true
     }
   }
+
+  playerMove = (event) => {
+    const squareRef = event.target.id;
+    console.log(event.target);
+    const gameState = [...this.state.gameBoard];
+    gameState[squareRef] = this.state.playerSide;
+
+    this.setState({
+      gameBoard: gameState
+    })
+   }
 
   render() {
     const { gameBoard } = this.state;
@@ -25,7 +37,7 @@ class App extends Component {
           <EntireBoard>
             <Frame>
               <ScoreBoard />
-              <TicTacBoard gameBoard={gameBoard} />
+              <TicTacBoard playerMove={this.playerMove} gameBoard={gameBoard} />
             </Frame>
           </EntireBoard>
         </main>
