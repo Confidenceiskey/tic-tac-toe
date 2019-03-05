@@ -27,8 +27,8 @@ class App extends Component {
     //turn it is
     this.updateState(gameState);
 
-    //Calls function for computer to make a move
-    this.computerMove(gameState);
+    //Calls function for computer to make a move 
+    setTimeout(() => this.computerMove(gameState), 350);
   } 
 
   computerMove = (gameState) => {
