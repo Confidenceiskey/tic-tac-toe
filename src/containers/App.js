@@ -28,7 +28,7 @@ class App extends Component {
     this.updateState(gameState);
 
     //Calls function for computer to make a move 
-    setTimeout(() => this.computerMove(gameState), 350);
+    setTimeout(() => this.computerMove(gameState), 430);
   } 
 
   computerMove = (gameState) => {
@@ -69,7 +69,18 @@ class App extends Component {
   }
 
   render() {
-    const { gameBoard } = this.state;
+    const { gameBoard, playerTurn } = this.state;
+
+    //Visually sets whose turn it is through classNames 
+    let computerClassName = '';
+    let playerClassName = '';
+
+    if (this.state.playerTurn === true) {
+      playerClassName += ' currentTurn';
+    } else {
+      computerClassName += ' currentTurn';
+    }
+
     return (
       <div className="App">
         <header className="App-header">
@@ -78,7 +89,7 @@ class App extends Component {
         <main className="App-main">
           <EntireBoard>
             <Frame>
-              <ScoreBoard />
+              <ScoreBoard playerClassName={playerClassName} computerClassName={computerClassName} />
               <TicTacBoard playerMove={this.playerMove} gameBoard={gameBoard} />
             </Frame>
           </EntireBoard>

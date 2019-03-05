@@ -43,3 +43,7 @@
   text-align: right;
   padding-right: 63px;
 }
+
+.scoreBoard .currentTurn {
+  color: yellow;
+}
