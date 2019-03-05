@@ -17,19 +17,23 @@ class App extends Component {
   }
 
   playerMove = (event) => {
+    //Determines which square was clicked and sets its 
+    //value equal to either 'X' or 'O'
     const squareRef = event.target.id;
     const gameState = [...this.state.gameBoard];
     gameState[squareRef] = this.state.playerSide;
 
-    this.setState({
-      gameBoard: gameState,
-      playerTurn: !this.state.playerTurn
-    })
+    //Updates state to reflect the new gameboard & whose
+    //turn it is
+    this.updateState(gameState);
 
+    //Calls function for computer to make a move
     this.computerMove(gameState);
   } 
 
   computerMove = (gameState) => {
+    //Maps & filters out the current available positions left 
+    //by index values on the game board
     const availableSquares = gameState.map((square, i) => {
       if (square === "") {
         return square + i;
@@ -40,13 +44,20 @@ class App extends Component {
       return !isNaN(square);
     })
 
+    //Assigns a random Number for the computer AI's next move
     const randNum = Math.floor((Math.random() * availableSquares.length));
 
+    //Sets the randomly picked available square as the
+    //computer's turn
     gameState[availableSquares[randNum]] = this.state.computerSide;
 
-    console.log("avail Squares ", availableSquares);
-    console.log("randNum ", randNum);
-    console.log(gameState);
+    //Updates state to reflect the gameboard & whose 
+    //turn it is
+    this.updateState(gameState);
+  }
+
+  //Updates game state after each turn
+  updateState = (gameState) => {
     this.setState({
       gameBoard: gameState,
       playerTurn: !this.state.playerTurn
