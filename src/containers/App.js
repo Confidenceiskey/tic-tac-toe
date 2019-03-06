@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EntireBoard from '../components/EntireBoard/EntireBoard';
 import Frame from '../components/Frame/Frame';
+import ModalPopup from '../components/ModalPopup/ModalPopup';
 import ScoreBoard from '../components/ScoreBoard/ScoreBoard';
 import TicTacBoard from '../components/TicTacBoard/TicTacBoard';
 import './App.css';
@@ -10,9 +11,11 @@ class App extends Component {
     super()
     this.state = {
       gameBoard: Array(9).fill(''),
-      playerSide: "X",
-      computerSide: "O",
-      playerTurn: true
+      playerSide: "",
+      computerSide: "",
+      playerTurn: true,
+      gameStatus: '',
+      isModalOn: false
     }
   }
 
@@ -68,8 +71,27 @@ class App extends Component {
     })
   }
 
+  //Changes whether the modal appears or not
+  // toggleModal = (playerSide, gameStatus) => {
+  //   if (playerSide !== "" || gameStatus !== "") {
+  //     this.setState({
+  //       isModalOn: !this.state.isModalOn
+  //     });
+  //   }
+  //   return this.state.isModalOn;
+  // }
+
+    //Selects the proper side the player wants to play
+  chooseSide = (event) => {
+    const side = event.target.innerHTML;
+    this.setState({
+      playerSide: side,
+      computerSide: side === 'X' ? 'O' : 'X'
+    })
+  }
+
   render() {
-    const { gameBoard, playerTurn } = this.state;
+    const { gameBoard, playerTurn, playerSide } = this.state;
 
     //Visually sets whose turn it is through classNames 
     let computerClassName = '';
@@ -81,8 +103,16 @@ class App extends Component {
       computerClassName += ' currentTurn';
     }
 
+    // Determines when the modal disappears
+    let modalClassName = '';
+
+    if (this.state.playerSide !== '') {
+      modalClassName = 'fade';
+    }
+
     return (
       <div className="App">
+        <ModalPopup chooseSide={this.chooseSide} modalClassName={modalClassName}/>
         <header className="App-header">
           <h1>TIC TAC TOE</h1>
         </header>
