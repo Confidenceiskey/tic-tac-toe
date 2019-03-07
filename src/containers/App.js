@@ -14,8 +14,7 @@ class App extends Component {
       playerSide: "",
       computerSide: "",
       playerTurn: true,
-      gameStatus: '',
-      isModalOn: false
+      gameStatus: ''
     }
   }
 
@@ -70,16 +69,6 @@ class App extends Component {
       playerTurn: !this.state.playerTurn
     })
   }
-
-  //Changes whether the modal appears or not
-  // toggleModal = (playerSide, gameStatus) => {
-  //   if (playerSide !== "" || gameStatus !== "") {
-  //     this.setState({
-  //       isModalOn: !this.state.isModalOn
-  //     });
-  //   }
-  //   return this.state.isModalOn;
-  // }
 
     //Selects the proper side the player wants to play
   chooseSide = (event) => {
