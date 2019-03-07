@@ -6,7 +6,7 @@ const StartModal = ({ chooseSide }) => {
     <div className='modal'>
       <p className='main-text'>SELECT SIDE</p>
       <p className='side' onClick={chooseSide}>X</p>
-      <p className='side'>O</p>
+      <p className='side' onClick={chooseSide}>O</p>
     </div>
   );
 }
