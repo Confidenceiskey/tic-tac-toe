@@ -2,14 +2,10 @@
 import React from 'react';
 import './ModalPopup.css';
 
-const ModalPopup = ({ chooseSide, modalClassName }) => {
+const ModalPopup = (props) => {
   return (
-    <div className={`modal-outer ${modalClassName}`}> 
-      <div className='modal'>
-        <p className='main-text'>SELECT SIDE</p>
-        <p className='side' onClick={chooseSide}>X</p>
-        <p className='side'>O</p>
-      </div>
+    <div className={`modal-outer ${props.modalClassName} ${props.hideClassName}`}> 
+      {props.children}
     </div>
   );
 }

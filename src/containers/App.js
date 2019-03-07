@@ -3,6 +3,7 @@ import EntireBoard from '../components/EntireBoard/EntireBoard';
 import Frame from '../components/Frame/Frame';
 import ModalPopup from '../components/ModalPopup/ModalPopup';
 import ScoreBoard from '../components/ScoreBoard/ScoreBoard';
+import StartModal from '../components/StartModal/StartModal';
 import TicTacBoard from '../components/TicTacBoard/TicTacBoard';
 import './App.css';
 
@@ -12,7 +13,9 @@ class App extends Component {
     this.state = {
       gameBoard: Array(9).fill(''),
       playerSide: "",
+      playerScore: 0,
       computerSide: "",
+      computerScore: 0,
       playerTurn: true,
       gameStatus: ''
     }
@@ -47,7 +50,9 @@ class App extends Component {
     })
 
     if (availableSquares.length === 0) {
-      console.log('Game Over!')
+      this.setState({
+        gameStatus: "Draw"
+      })
     } else {
       //Assigns a random Number for the computer AI's next move
       const randNum = Math.floor((Math.random() * availableSquares.length));
@@ -79,8 +84,18 @@ class App extends Component {
     })
   }
 
+  //Hides element on the page with a delay
+  hideElement = (hideClassName) => {
+    return hideClassName += 'hide';
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.hideElement)
+  }
+
   render() {
-    const { gameBoard, playerTurn, playerSide } = this.state;
+    const { gameBoard, playerTurn, playerSide, 
+      gameStatus, playerScore, computerScore } = this.state;
 
     //Visually sets whose turn it is through classNames 
     let computerClassName = '';
@@ -94,21 +109,33 @@ class App extends Component {
 
     // Determines when the modal disappears
     let modalClassName = '';
+    let hideClassName = '';
 
     if (this.state.playerSide !== '') {
       modalClassName = 'fade';
+
+      setTimeout(() => {
+        this.hideElement(hideClassName);
+      }, 500);
     }
 
     return (
       <div className="App">
-        <ModalPopup chooseSide={this.chooseSide} modalClassName={modalClassName}/>
+        <ModalPopup modalClassName={modalClassName} hideClassName={hideClassName}>
+          <StartModal chooseSide={this.chooseSide} />
+        </ModalPopup>
         <header className="App-header">
           <h1>TIC TAC TOE</h1>
         </header>
         <main className="App-main">
           <EntireBoard>
             <Frame>
-              <ScoreBoard playerClassName={playerClassName} computerClassName={computerClassName} />
+              <ScoreBoard 
+                playerClassName={playerClassName} 
+                computerClassName={computerClassName} 
+                playerScore={playerScore}
+                computerScore={computerScore}
+              />
               <TicTacBoard playerMove={this.playerMove} gameBoard={gameBoard} />
             </Frame>
           </EntireBoard>
