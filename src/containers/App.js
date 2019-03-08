@@ -28,40 +28,42 @@ class App extends Component {
     const gameState = [...this.state.gameBoard];
     gameState[squareRef] = this.state.playerSide;
 
-    //Updates state to reflect the new gameboard & whose
-    //turn it is
-    this.updateState(gameState);
+    //Prevents further clicking after game is over!
+    if (this.state.gameStatus === '') {
+      //Updates state to reflect the new gameboard & whose
+      //turn it is
+      this.updateState(gameState);
 
-    //Checks if game is over, if not, calls function 
-    //for computer to make a move 
-    let gameFate = this.checkWinner(gameState, this.state.playerSide, this.state.computerSide);
+      //Checks if game is over, if not, calls function 
+      //for computer to make a move 
+      let gameFate = this.checkWinner(gameState, this.state.playerSide, this.state.computerSide);
 
-    //Case 1: Winner
-    if (gameFate === 'player won') {
-      this.setState({
-        gameStatus: "You win!",
-        playerScore: this.state.playerScore + 1
-      })
-      //alert("You win!");
+      //Case 1: Winner
+      if (gameFate === 'player won') {
+        this.setState({
+          gameStatus: "You win!",
+          playerScore: this.state.playerScore + 1
+        })
+        //alert("You win!");
 
-    //Case 2: Loser
-    } else if (gameFate === 'computer won') {
-      this.setState({
-        gameStatus: "You lose!",
-        computerScore: this.state.playerScore + 1
-      })
-    }
+      //Case 2: Loser
+      } else if (gameFate === 'computer won') {
+        this.setState({
+          gameStatus: "You lose!",
+          computerScore: this.state.computerScore + 1
+        })
 
-    //Computer Move
-    else if (gameState.includes('')) {
-      setTimeout(() => this.computerMove(gameState), 430);
-    
-    //Case 3: Draw
-    } else { 
-      this.setState({
-        gameStatus: "Draw"
-      })
-      console.log('draw');
+      //Computer Move
+      } else if (gameState.includes('')) {
+        setTimeout(() => this.computerMove(gameState), 430);
+      
+      //Case 3: Draw
+      } else { 
+        this.setState({
+          gameStatus: "Draw"
+        })
+        console.log('draw');
+      }
     }
   } 
 
@@ -120,7 +122,7 @@ class App extends Component {
     }
     return playerFate;
   }
-  
+
 
   //Updates game state after each turn
   updateState = (gameState) => {
