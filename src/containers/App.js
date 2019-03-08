@@ -32,8 +32,37 @@ class App extends Component {
     //turn it is
     this.updateState(gameState);
 
-    //Calls function for computer to make a move 
-    setTimeout(() => this.computerMove(gameState), 430);
+    //Checks if game is over, if not, calls function 
+    //for computer to make a move 
+    let gameFate = this.checkWinner(gameState, this.state.playerSide, this.state.computerSide);
+
+    //Case 1: Winner
+    if (gameFate === 'player won') {
+      this.setState({
+        gameStatus: "You win!",
+        playerScore: this.state.playerScore + 1
+      })
+      //alert("You win!");
+
+    //Case 2: Loser
+    } else if (gameFate === 'computer won') {
+      this.setState({
+        gameStatus: "You lose!",
+        computerScore: this.state.playerScore + 1
+      })
+    }
+
+    //Computer Move
+    else if (gameState.includes('')) {
+      setTimeout(() => this.computerMove(gameState), 430);
+    
+    //Case 3: Draw
+    } else { 
+      this.setState({
+        gameStatus: "Draw"
+      })
+      console.log('draw');
+    }
   } 
 
   computerMove = (gameState) => {
@@ -49,22 +78,51 @@ class App extends Component {
       return !isNaN(square);
     })
 
-    if (availableSquares.length === 0) {
-      this.setState({
-        gameStatus: "Draw"
-      })
-    } else {
-      //Assigns a random Number for the computer AI's next move
-      const randNum = Math.floor((Math.random() * availableSquares.length));
+    console.log(availableSquares);
 
-      //Sets the randomly picked available square as the
-      //computer's turn
-      gameState[availableSquares[randNum]] = this.state.computerSide;
+    //Assigns a random Number for the computer AI's next move
+    const randNum = Math.floor((Math.random() * availableSquares.length));
 
-      //Updates state to reflect the gameboard & whose 
-      //turn it is
-      this.updateState(gameState);
+    //Sets the randomly picked available square as the
+    //computer's turn
+    gameState[availableSquares[randNum]] = this.state.computerSide;
+
+    //Updates state to reflect the gameboard & whose 
+    //turn it is
+    this.updateState(gameState);
+  }
+
+  checkWinner = (gameState, playerSide, computerSide) => {
+    //All possible winning combinations for tic-tac-toe game
+    const winningCombos = [
+      [0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], 
+      [2, 4, 6], [2, 5, 8], [3, 4, 5], [6, 7, 8]
+    ];
+    let playerFate = '';
+
+    //Finds squares selected by player
+    const didPlayerWin = gameState.map((box, i) => {
+      if (box === playerSide) {
+        return i;
+      }
+      return undefined;
+    }).filter (box => {
+      return !isNaN(box);
+    })
+
+    //Determines if winning combination matches
+    for (let i = 0; i < winningCombos.length; i++) {
+      if (didPlayerWin.map(num => {
+        if (winningCombos[i].includes(num)) {
+          return num;
+        }
+      }).filter(num => {
+        return num !== undefined;
+      }).length === 3) {
+        playerFate = 'player won'
+      }
     }
+    return playerFate;
   }
 
   //Updates game state after each turn
@@ -101,17 +159,22 @@ class App extends Component {
     let computerClassName = '';
     let playerClassName = '';
 
-    if (this.state.playerTurn === true) {
-      playerClassName += ' currentTurn';
+    if (gameStatus === '') {
+      if (playerTurn === true) {
+        playerClassName += ' currentTurn';
+      } else {
+        computerClassName += ' currentTurn';
+      }
     } else {
-      computerClassName += ' currentTurn';
+      computerClassName = 'currentTurn';
+      playerClassName = 'currentTurn';
     }
 
     // Determines when the modal disappears
     let modalClassName = '';
     let hideClassName = '';
 
-    if (this.state.playerSide !== '') {
+    if (playerSide !== '') {
       modalClassName = 'fade';
 
       setTimeout(() => {
