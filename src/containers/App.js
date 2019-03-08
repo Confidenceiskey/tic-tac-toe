@@ -78,8 +78,6 @@ class App extends Component {
       return !isNaN(square);
     })
 
-    console.log(availableSquares);
-
     //Assigns a random Number for the computer AI's next move
     const randNum = Math.floor((Math.random() * availableSquares.length));
 
@@ -113,17 +111,16 @@ class App extends Component {
     //Determines if winning combination matches
     for (let i = 0; i < winningCombos.length; i++) {
       if (didPlayerWin.map(num => {
-        if (winningCombos[i].includes(num)) {
-          return num;
-        }
+        return (winningCombos[i].includes(num) ? num : undefined) 
       }).filter(num => {
         return num !== undefined;
       }).length === 3) {
-        playerFate = 'player won'
+        playerFate = 'player won';
       }
     }
     return playerFate;
   }
+  
 
   //Updates game state after each turn
   updateState = (gameState) => {
