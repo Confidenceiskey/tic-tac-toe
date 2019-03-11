@@ -17,194 +17,102 @@ class App extends Component {
       computerSide: "",
       computerScore: 0,
       playerTurn: true,
-      gameStatus: ''
+      gameStatus: 'game in play'
     }
   }
 
   playerMove = (event) => {
-    //Determines which square was clicked,
-    //copies current game board state, and 
-    //sets its value equal to either 'X' or 'O'
-    const squareRef = event.target.id;
-    const gameState = [...this.state.gameBoard];
+    const { gameBoard, gameStatus, playerSide, 
+      computerSide, computerScore } = this.state;
+    let clickedSquare = event.target.id;
+    let currentGameState = [...gameBoard];
 
-    //Prevents overwriting on game board
-    if (gameState[squareRef] === '') {
-      gameState[squareRef] = this.state.playerSide;
-    }
+    if (currentGameState[clickedSquare] === '' && gameStatus === 'game in play') {
+      currentGameState[clickedSquare] = playerSide;
+      this.updateGameBoard(currentGameState);
 
-    //Prevents further clicking/modifying of board
-    //after game is over!
-    if (this.state.gameStatus === '') {
-      //Updates state to reflect the new gameboard & whose
-      //turn it is
-      this.updateState(gameState);
+      if (this.isWinner(currentGameState, playerSide)) {
+        this.updateStatus("You win!");
+        this.updatePlayerScore();
 
-      //Checks if game is over, if not, calls function 
-      //for computer to make a move 
-      //let gameFate = this.checkWinner(gameState, this.state.playerSide, this.state.computerSide);
-
-
-      this.decision(gameState, this.state.playerSide);
-      //Case 1: Winner
-      // if (gameFate === 'player won') {
-      //   this.setState({
-      //     gameStatus: "You win!",
-      //     playerScore: this.state.playerScore + 1
-      //   })
-        //alert("You win!");
-
-      //Case 2: Loser
-      // } else if (gameFate === 'computer won') {
-      //   this.setState({
-      //     gameStatus: "You lose!",
-      //     computerScore: this.state.computerScore + 1
-      //   })
-
-      //Computer Move
-      if (gameState.includes('') && this.state.gameStatus === '') {
-        setTimeout(() => this.computerMove(gameState, this.state.playerSide, this.state.computerSide), 430);
+      } else if (currentGameState.includes('') && gameStatus === 'game in play') {
+        setTimeout(() => this.computerMove(currentGameState, computerSide, computerScore), 430);
       
-      //Case 3: Draw
-      } else { 
+      } else {
         this.setState({
           gameStatus: "Draw"
         })
-        console.log('draw');
       }
-    }
-  } 
-
-  decision = (gameState, side) => {
-    //Checks if there is a winner/loser
-    let gameFate = this.checkWinner(gameState, side);
-
-    //Case 1: Winner
-    if (gameFate === 'player won') {
-      this.setState({
-        gameStatus: "You win!",
-        playerScore: this.state.playerScore + 1
-      })
-      //alert("You win!");
-
-    //Case 2: Loser
-    } else if (gameFate === 'computer won') {
-      this.setState({
-        gameStatus: "You lose!",
-        computerScore: this.state.computerScore + 1
-      })
-    }
+    } 
   }
 
-  computerMove = (gameState, playerSide, computerSide) => {
-    //Checks if there is a winner/loser
-    this.decision(gameState, computerSide);
-
-    if (this.state.gameStatus === '') {
-      //Maps & filters out the current available positions left 
-      //by index values on the game board
-      const availableSquares = gameState.map((square, i) => {
-      if (square === "") {
-        return square + i;
-      } else {
-        return square;
-      }
-      }).filter(square => {
-        return !isNaN(square);
-      })
-
-      //Assigns a random Number for the computer AI's next move
-      const randNum = Math.floor((Math.random() * availableSquares.length));
-
-      //Sets the randomly picked available square as the
-      //computer's turn
-      gameState[availableSquares[randNum]] = this.state.computerSide;
-
-      //Updates state to reflect the gameboard & whose 
-      //turn it is
-      this.updateState(gameState);
-    }
-  }
-
-  checkWinner = (gameState, side) => {
-    //All possible winning combinations for tic-tac-toe game
-    const winningCombos = [
-      [0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], 
-      [2, 4, 6], [2, 5, 8], [3, 4, 5], [6, 7, 8]
-    ];
-    //let winner = '';
-
-    //Finds player's or computer's picked spots on board
-    let pickedLocations = this.playedMoves(gameState, side);
-    //let computersLocations = this.playedMoves(gameState, computerSide);
-
-
-    //Checks if any of the picked spots on the game board 
-    //match one of the winning combinations
-    return this.whoWon(pickedLocations, side, winningCombos);
-    //let isComputerWinner = this.whoWon(computersLocations, computerSide, winningCombos);
-
-    // if (isWinner === 'player won') {
-    //   winner = isWinner;
-    // } else if (isComputerWinner === 'computer won') {
-    //   winner = isComputerWinner;
-    // }
-
-    // for (let i = 0; i < winningCombos.length; i++) {
-    //   if (playersLocations.map(num => {
-    //     return (winningCombos[i].includes(num) ? num : undefined) 
-    //   }).filter(num => {
-    //     return num !== undefined;
-    //   }).length === 3) {
-    //     playerFate = 'player won';
-    //   }
-    // }
-    //return winner;
-  }
-
-  playedMoves = (gameState, side) => {
-    //Finds squares selected by player or comp & returns the
-    //index values of already picked squares
-    return gameState.map((box, i) => {
-      if (box === side) {
-        return i;
-      }
-      return undefined;
-    }).filter(box => {
-      return !isNaN(box);
-    })
-  }
-
-  whoWon = (playedLocations, side, winningCombos) => {
-    let playersFate = '';
-
-    //Checks if any of the picked spots on the game board 
-    //match one of the winning combinations
-    for (let i = 0; i < winningCombos.length; i++) {
-      if (playedLocations.map(num => {
-        return (winningCombos[i].includes(num) ? num : undefined) 
-      }).filter(num => {
-        return num !== undefined;
-      }).length === 3) {
-        if (side === this.state.playerSide) {
-          playersFate = 'player won';
-        } else {
-          playersFate = 'computer won';
-        }
-      }
-    }
-    return playersFate;
-  }
-
-  //Updates game state after each turn
-  updateState = (gameState) => {
+  updateGameBoard = (gameState) => {
     this.setState({
       gameBoard: gameState,
       playerTurn: !this.state.playerTurn
     })
   }
 
-    //Selects the proper side the player wants to play
+  isWinner = (gameBoard, side) => {
+    const allWiningCombos = [
+      [0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], 
+      [2, 4, 6], [2, 5, 8], [3, 4, 5], [6, 7, 8]
+    ];
+
+    for (const eachWiningLine of allWiningCombos) {
+      if (
+        gameBoard[eachWiningLine[0]] === gameBoard[eachWiningLine[1]] && 
+        gameBoard[eachWiningLine[0]] === gameBoard[eachWiningLine[2]] &&
+        gameBoard[eachWiningLine[0]] === side
+      ) {
+        return true;  
+      }
+    }
+  }
+
+  updateStatus = (result) => {
+    this.setState({
+      gameStatus: result,
+    })
+  }
+
+  updatePlayerScore = () => {
+    this.setState({
+      playerScore: this.state.playerScore + 1
+    })
+  }
+
+  computerMove = (currentGameState, computerSide, computerScore) => {
+    if (this.state.gameStatus === 'game in play') {
+      const availableMoves = currentGameState.map((square, i) => {
+        if (square === "") {
+          return square + i;
+
+        } else {
+          return square;
+        }
+      }).filter(square => {
+          return !isNaN(square);
+      })
+
+      const randomIndexNum = Math.floor((Math.random() * availableMoves.length));
+
+      currentGameState[availableMoves[randomIndexNum]] = computerSide;
+      this.updateGameBoard(currentGameState);
+
+      if (this.isWinner(currentGameState, computerSide)) {
+        this.updateStatus("You lose!");
+        this.updateComputerScore();
+      }
+    }
+  }
+
+  updateComputerScore = () => {
+    this.setState({
+      computerScore: this.state.computerScore + 1
+    })
+  }
+
   chooseSide = (event) => {
     const side = event.target.innerHTML;
     this.setState({
@@ -213,13 +121,8 @@ class App extends Component {
     })
   }
 
-  //Hides element on the page with a delay
   hideElement = (hideClassName) => {
     return hideClassName += 'hide';
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.hideElement)
   }
 
   render() {
@@ -230,12 +133,15 @@ class App extends Component {
     let computerClassName = '';
     let playerClassName = '';
 
-    if (gameStatus === '') {
+    if (gameStatus === 'game in play') {
+
       if (playerTurn === true) {
         playerClassName += ' currentTurn';
+
       } else {
         computerClassName += ' currentTurn';
       }
+
     } else {
       computerClassName = 'currentTurn';
       playerClassName = 'currentTurn';
@@ -283,4 +189,3 @@ class App extends Component {
 }
 
 export default App;
-
