@@ -24,7 +24,7 @@ class App extends Component {
 
   playerMove = (event) => {
     const { gameBoard, gameStatus, playerSide, 
-      computerSide, computerScore } = this.state;
+      computerSide} = this.state;
     let clickedSquare = event.target.id;
     let currentGameState = [...gameBoard];
 
@@ -37,7 +37,7 @@ class App extends Component {
         this.updatePlayerScore();
 
       } else if (currentGameState.includes('') && gameStatus === "game in play") {
-        setTimeout(() => this.computerMove(currentGameState, computerSide, computerScore), 430);
+        setTimeout(() => this.computerMove(currentGameState, computerSide), 430);
       
       } else {
         this.setState({
@@ -83,8 +83,8 @@ class App extends Component {
     })
   }
 
-  computerMove = (currentGameState, computerSide, computerScore) => {
-    if (this.state.gameStatus === "game in play") {
+  computerMove = (currentGameState, computerSide) => {
+    // if (this.state.gameStatus === "game in play") {
       const availableMoves = currentGameState.map((square, i) => {
         if (square === "") {
           return square + i;
@@ -96,6 +96,16 @@ class App extends Component {
           return !isNaN(square);
       })
 
+      // Implementing the minimax algorithm
+      // const bestIndexNum = miniMaxAI(currentGameState, computerSide, depth);
+
+      // Base case 
+
+
+      // Recursion
+
+      // Finish implementing minimax algorithm
+
       const randomIndexNum = Math.floor((Math.random() * availableMoves.length));
 
       currentGameState[availableMoves[randomIndexNum]] = computerSide;
@@ -105,8 +115,19 @@ class App extends Component {
         this.updateStatus("You lose!");
         this.updateComputerScore();
       }
-    }
+    // }
   }
+
+  miniMaxAI = (currentGameState, side, depth) => {
+    if (!this.isWinner(currentGameState, side)) {
+
+    }
+    // const availableMoves = findAvailableMoves(currentGameState);
+  }
+
+  // findAvailableMoves = () => {
+
+  // }
 
   updateComputerScore = () => {
     this.setState({
