@@ -69,6 +69,7 @@ class App extends Component {
         return true;  
       }
     }
+    return false;
   }
 
   updateStatus = (result) => {
@@ -84,50 +85,86 @@ class App extends Component {
   }
 
   computerMove = (currentGameState, computerSide) => {
-    // if (this.state.gameStatus === "game in play") {
-      const availableMoves = currentGameState.map((square, i) => {
-        if (square === "") {
-          return square + i;
+    let depth = 0;
+    const bestIndexNum = this.miniMaxAI(currentGameState, computerSide, depth);
+    
+    currentGameState[bestIndexNum] = computerSide;
+    this.updateGameBoard(currentGameState);
 
-        } else {
-          return square;
-        }
-      }).filter(square => {
-          return !isNaN(square);
-      })
-
-      // Implementing the minimax algorithm
-      // const bestIndexNum = miniMaxAI(currentGameState, computerSide, depth);
-
-      // Base case 
-
-
-      // Recursion
-
-      // Finish implementing minimax algorithm
-
-      const randomIndexNum = Math.floor((Math.random() * availableMoves.length));
-
-      currentGameState[availableMoves[randomIndexNum]] = computerSide;
-      this.updateGameBoard(currentGameState);
-
-      if (this.isWinner(currentGameState, computerSide)) {
-        this.updateStatus("You lose!");
-        this.updateComputerScore();
-      }
-    // }
+    if (this.isWinner(currentGameState, computerSide)) {
+      this.updateStatus("You lose!");
+      this.updateComputerScore();
+    }
   }
 
   miniMaxAI = (currentGameState, side, depth) => {
-    if (!this.isWinner(currentGameState, side)) {
+    if (!this.isWinner(currentGameState, side) && currentGameState.includes('')) {
+      const winningChanceValues = [];
 
+      for (let [i, square] of currentGameState.entries()) {
+        const updatedGameState = [...currentGameState];
+
+        if (square === '') {
+          updatedGameState[i] = side;
+          const newSide = (side === this.state.playerSide ? this.state.computerSide : this.state.playerSide);
+          const winningChanceValue = this.miniMaxAI(updatedGameState, newSide, depth + 10);
+          winningChanceValues.push({ 
+            winningChanceValue: winningChanceValue,
+            indexNum: i  
+          });
+        }
+      }
+
+      if (side === this.state.computerSide) {
+        const maxWinningChance = winningChanceValues.reduce((val1, val2) => {
+          if (val1.winningChanceValue < val2.winningChanceValue) {
+            return val2;
+          } else {
+            return val1;
+          }
+        })
+
+        if (depth === 0) {
+          return maxWinningChance.indexNum;
+
+        } else {
+          return maxWinningChance.winningChanceValue;
+        }
+
+      } else {
+        const minWinningChance = winningChanceValues.reduce((val1, val2) => {
+          if (val1.winningChanceValue > val2.winningChanceValue) {
+            return val2;
+          } else {
+            return val1;
+          }
+        })
+
+        if (depth === 0) {
+          return minWinningChance.indexNum;
+
+        } else {
+          return minWinningChance.winningChanceValue;
+        }
+      }
+
+    } else {
+      return this.calculateChanceOfWin(currentGameState, side, depth);
     }
-    // const availableMoves = findAvailableMoves(currentGameState);
   }
 
-  // findAvailableMoves = () => {
+  calculateChanceOfWin = (gameState, side, depth) => {
+    // Tie
+    if (!gameState.includes('')) {
+      return 0;
 
-  // }
+    } else if (side === this.state.playerSide) {
+      return depth - 100;
+
+    } else if (side === this.state.computerSide) {
+      return 100 - depth;
+    }
+  }
 
   updateComputerScore = () => {
     this.setState({
