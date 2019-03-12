@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import EntireBoard from '../components/EntireBoard/EntireBoard';
 import Frame from '../components/Frame/Frame';
+import GameEndModal from '../components/GameEndModal/GameEndModal';
 import ModalPopup from '../components/ModalPopup/ModalPopup';
 import ScoreBoard from '../components/ScoreBoard/ScoreBoard';
 import StartModal from '../components/StartModal/StartModal';
@@ -11,13 +12,13 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      gameBoard: Array(9).fill(''),
+      gameBoard: Array(9).fill(""),
       playerSide: "",
       playerScore: 0,
       computerSide: "",
       computerScore: 0,
       playerTurn: true,
-      gameStatus: 'game in play'
+      gameStatus: "game in play"
     }
   }
 
@@ -27,7 +28,7 @@ class App extends Component {
     let clickedSquare = event.target.id;
     let currentGameState = [...gameBoard];
 
-    if (currentGameState[clickedSquare] === '' && gameStatus === 'game in play') {
+    if (currentGameState[clickedSquare] === '' && gameStatus === "game in play") {
       currentGameState[clickedSquare] = playerSide;
       this.updateGameBoard(currentGameState);
 
@@ -35,7 +36,7 @@ class App extends Component {
         this.updateStatus("You win!");
         this.updatePlayerScore();
 
-      } else if (currentGameState.includes('') && gameStatus === 'game in play') {
+      } else if (currentGameState.includes('') && gameStatus === "game in play") {
         setTimeout(() => this.computerMove(currentGameState, computerSide, computerScore), 430);
       
       } else {
@@ -83,7 +84,7 @@ class App extends Component {
   }
 
   computerMove = (currentGameState, computerSide, computerScore) => {
-    if (this.state.gameStatus === 'game in play') {
+    if (this.state.gameStatus === "game in play") {
       const availableMoves = currentGameState.map((square, i) => {
         if (square === "") {
           return square + i;
@@ -117,34 +118,52 @@ class App extends Component {
     const side = event.target.innerHTML;
     this.setState({
       playerSide: side,
-      computerSide: side === 'X' ? 'O' : 'X'
+      computerSide: side === "X" ? "O" : "X"
     })
   }
 
   hideElement = (hideClassName) => {
-    return hideClassName += 'hide';
+    return hideClassName += "hide";
+  }
+
+  restartGame = () => {
+    this.setState({
+      gameBoard: Array(9).fill(""),
+      gameStatus: "game in play",
+      playerTurn: true
+    })
   }
 
   render() {
     const { gameBoard, playerTurn, playerSide, 
       gameStatus, playerScore, computerScore } = this.state;
 
+      const showEndingModal = (word) => {
+        return word;
+      }
+
     //Visually sets whose turn it is through classNames 
     let computerClassName = '';
     let playerClassName = '';
+    let gameOverClassName = "hidden";
 
-    if (gameStatus === 'game in play') {
+    if (gameStatus === "game in play") {
 
       if (playerTurn === true) {
-        playerClassName += ' currentTurn';
+        playerClassName += " currentTurn";
 
       } else {
-        computerClassName += ' currentTurn';
+        computerClassName += " currentTurn";
       }
 
     } else {
-      computerClassName = 'currentTurn';
-      playerClassName = 'currentTurn';
+      computerClassName = "currentTurn";
+      playerClassName = "currentTurn";
+      gameOverClassName = showEndingModal("show");
+
+      setTimeout(() => {
+        this.restartGame()
+      }, 1350);
     }
 
     // Determines when the modal disappears
@@ -152,7 +171,7 @@ class App extends Component {
     let hideClassName = '';
 
     if (playerSide !== '') {
-      modalClassName = 'fade';
+      modalClassName = "fade";
 
       setTimeout(() => {
         this.hideElement(hideClassName);
@@ -163,6 +182,9 @@ class App extends Component {
       <div className="App">
         <ModalPopup modalClassName={modalClassName} hideClassName={hideClassName}>
           <StartModal chooseSide={this.chooseSide} />
+        </ModalPopup>
+        <ModalPopup gameOverClassName={gameOverClassName}>
+          <GameEndModal gameStatus={gameStatus}/>
         </ModalPopup>
         <header className="App-header">
           <h1>TIC TAC TOE</h1>
