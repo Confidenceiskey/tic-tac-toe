@@ -13,6 +13,7 @@ class App extends Component {
     super()
     this.state = {
       gameBoard: Array(9).fill(""),
+      //gameBoard: ["X", "", "", "O", "O", "", "", "X", ""],
       playerSide: "",
       playerScore: 0,
       computerSide: "",
@@ -31,8 +32,8 @@ class App extends Component {
     if (currentGameState[clickedSquare] === '' && gameStatus === "game in play") {
       currentGameState[clickedSquare] = playerSide;
       this.updateGameBoard(currentGameState);
-
-      if (this.isWinner(currentGameState, playerSide)) {
+      
+      if (this.isWinner(currentGameState, playerSide) === true) {
         this.updateStatus("You win!");
         this.updatePlayerScore();
 
@@ -61,14 +62,20 @@ class App extends Component {
     ];
 
     for (const eachWiningLine of allWiningCombos) {
+
       if (
         gameBoard[eachWiningLine[0]] === gameBoard[eachWiningLine[1]] && 
         gameBoard[eachWiningLine[0]] === gameBoard[eachWiningLine[2]] &&
-        gameBoard[eachWiningLine[0]] === side
+        gameBoard[eachWiningLine[0]] !== ""
       ) {
-        return true;  
+        return gameBoard[eachWiningLine[0]];  
       }
     }
+
+    if (!gameBoard.includes('')) {
+      return "draw";
+    }
+
     return false;
   }
 
@@ -98,7 +105,8 @@ class App extends Component {
   }
 
   miniMaxAI = (currentGameState, side, depth) => {
-    if (!this.isWinner(currentGameState, side) && currentGameState.includes('')) {
+    const gameFate = this.isWinner(currentGameState, side);
+    if (gameFate === false) {
       const winningChanceValues = [];
 
       for (let [i, square] of currentGameState.entries()) {
@@ -107,9 +115,9 @@ class App extends Component {
         if (square === '') {
           updatedGameState[i] = side;
           const newSide = (side === this.state.playerSide ? this.state.computerSide : this.state.playerSide);
-          const winningChanceValue = this.miniMaxAI(updatedGameState, newSide, depth + 10);
+          const value = this.miniMaxAI(updatedGameState, newSide, depth + 10);
           winningChanceValues.push({ 
-            winningChanceValue: winningChanceValue,
+            winningChanceValue: value,
             indexNum: i  
           });
         }
@@ -125,6 +133,7 @@ class App extends Component {
         })
 
         if (depth === 0) {
+          console.log(maxWinningChance);
           return maxWinningChance.indexNum;
 
         } else {
@@ -149,19 +158,19 @@ class App extends Component {
       }
 
     } else {
-      return this.calculateChanceOfWin(currentGameState, side, depth);
+      return this.calculateChanceOfWin(gameFate, side, depth);
     }
   }
 
-  calculateChanceOfWin = (gameState, side, depth) => {
+  calculateChanceOfWin = (gameFate, side, depth) => {
     // Tie
-    if (!gameState.includes('')) {
+    if (gameFate === "draw") {
       return 0;
 
-    } else if (side === this.state.playerSide) {
+    } else if (gameFate === this.state.playerSide) {
       return depth - 100;
 
-    } else if (side === this.state.computerSide) {
+    } else if (gameFate === this.state.computerSide) {
       return 100 - depth;
     }
   }

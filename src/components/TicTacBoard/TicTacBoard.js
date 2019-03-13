@@ -10,7 +10,7 @@ const TicTacBoard = ({ gameBoard, playerMove }) => {
           gameBoard.map((boardValue, i) => {
             return (
               <OneSquare
-                key={i}
+                key={i+1}
                 id={i}
                 value={gameBoard[i]}
                 onClick={playerMove}
