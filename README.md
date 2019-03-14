@@ -17,6 +17,9 @@ _This project is part of the [freeCodeCamp legacy curriculum](https://www.freeco
 
 #### Preview
 
+Check out the [live version](https://confidenceiskey.github.io/tic-tac-toe/)
+
+![Screenshot of my tic tac toe game built in React](https://confidenceiskey.github.io/codepenimg/tictactoe.jpeg "Screenshot of my tic tac toe React App")
 
 #### Disclaimer
 
