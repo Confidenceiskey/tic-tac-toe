@@ -13,7 +13,6 @@ class App extends Component {
     super()
     this.state = {
       gameBoard: Array(9).fill(""),
-      //gameBoard: ["X", "", "", "O", "O", "", "", "X", ""],
       playerSide: "",
       playerScore: 0,
       computerSide: "",
@@ -33,7 +32,7 @@ class App extends Component {
       currentGameState[clickedSquare] = playerSide;
       this.updateGameBoard(currentGameState);
       
-      if (this.isWinner(currentGameState, playerSide) === true) {
+      if (this.isWinner(currentGameState) === playerSide) {
         this.updateStatus("You win!");
         this.updatePlayerScore();
 
@@ -55,7 +54,7 @@ class App extends Component {
     })
   }
 
-  isWinner = (gameBoard, side) => {
+  isWinner = (gameBoard) => {
     const allWiningCombos = [
       [0, 1, 2], [0, 4, 8], [0, 3, 6], [1, 4, 7], 
       [2, 4, 6], [2, 5, 8], [3, 4, 5], [6, 7, 8]
@@ -98,14 +97,14 @@ class App extends Component {
     currentGameState[bestIndexNum] = computerSide;
     this.updateGameBoard(currentGameState);
 
-    if (this.isWinner(currentGameState, computerSide)) {
+    if (this.isWinner(currentGameState) === computerSide) {
       this.updateStatus("You lose!");
       this.updateComputerScore();
     }
   }
 
   miniMaxAI = (currentGameState, side, depth) => {
-    const gameFate = this.isWinner(currentGameState, side);
+    const gameFate = this.isWinner(currentGameState);
     if (gameFate === false) {
       const winningChanceValues = [];
 
@@ -125,6 +124,7 @@ class App extends Component {
 
       if (side === this.state.computerSide) {
         const maxWinningChance = winningChanceValues.reduce((val1, val2) => {
+          
           if (val1.winningChanceValue < val2.winningChanceValue) {
             return val2;
           } else {
@@ -133,15 +133,14 @@ class App extends Component {
         })
 
         if (depth === 0) {
-          console.log(maxWinningChance);
           return maxWinningChance.indexNum;
-
         } else {
           return maxWinningChance.winningChanceValue;
         }
 
       } else {
         const minWinningChance = winningChanceValues.reduce((val1, val2) => {
+          
           if (val1.winningChanceValue > val2.winningChanceValue) {
             return val2;
           } else {
@@ -151,7 +150,6 @@ class App extends Component {
 
         if (depth === 0) {
           return minWinningChance.indexNum;
-
         } else {
           return minWinningChance.winningChanceValue;
         }
@@ -163,13 +161,11 @@ class App extends Component {
   }
 
   calculateChanceOfWin = (gameFate, side, depth) => {
-    // Tie
+
     if (gameFate === "draw") {
       return 0;
-
     } else if (gameFate === this.state.playerSide) {
       return depth - 100;
-
     } else if (gameFate === this.state.computerSide) {
       return 100 - depth;
     }
@@ -205,9 +201,9 @@ class App extends Component {
     const { gameBoard, playerTurn, playerSide, 
       gameStatus, playerScore, computerScore } = this.state;
 
-      const showEndingModal = (word) => {
-        return word;
-      }
+    const showEndingModal = (text) => {
+      return text;
+    }
 
     //Visually sets whose turn it is through classNames 
     let computerClassName = '';
