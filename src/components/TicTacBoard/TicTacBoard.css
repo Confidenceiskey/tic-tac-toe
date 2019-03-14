@@ -13,3 +13,23 @@
 .outsideGameArea, .gridLines {
   width: 310px;
 }
+
+@media (min-width: 351px) and (max-width: 405px) {
+  .gridLines {
+    grid-template-columns: 80px 80px 80px;
+  }
+
+  .outsideGameArea, .gridLines {
+    width: 250px;
+  }
+}
+
+@media (max-width: 350px) {
+  .gridLines {
+    grid-template-columns: 70px 70px 70px;
+  }
+
+  .outsideGameArea, .gridLines {
+    width: 220px;
+  }
+}

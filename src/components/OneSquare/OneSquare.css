@@ -15,3 +15,19 @@
 .each-square:hover {
   cursor: pointer;
 }
+
+@media (min-width: 351px) and (max-width: 405px) {
+  .board-font {
+    font-size: 4.65em;
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 350px) {
+  .board-font {
+    font-size: 4em;
+    width: 70px;
+    height: 70px;
+  }
+}

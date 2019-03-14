@@ -43,3 +43,15 @@
 .scoreBoard .currentTurn {
   color: yellow;
 }
+
+@media (min-width: 351px) and (max-width: 405px) {
+  .scoreBoard {
+    width: 310px;
+  }
+}
+
+@media (max-width: 350px) {
+  .scoreBoard {
+    width: 280px;
+  }
+}
