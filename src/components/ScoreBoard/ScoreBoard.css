@@ -19,7 +19,6 @@
   font-weight: 400;
   font-size: 1.3em;
   align-self: center;
-  /*color: #999;*/
   color: #4c4d00;
 }
 
@@ -27,15 +26,12 @@
   text-align: right;
 }
 
-/* Use Yellow (#ffff00) indicating turn */
 .scoreTally {
   font-size: 2.4em;
   font-weight: 800;
   margin-top: -4px;
   padding-left: 43px;
   align-self: start;
-  /*color: #d9d9d9;*/
-  /*color: #bfbfbf;*/
   color: #4c4d00;
 }
 

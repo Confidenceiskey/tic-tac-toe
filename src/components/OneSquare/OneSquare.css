@@ -11,3 +11,7 @@
 .each-square {
   background-color: #1a1a1a;
 }
+
+.each-square:hover {
+  cursor: pointer;
+}
