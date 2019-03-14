@@ -39,3 +39,15 @@
   cursor: pointer;
   background-color: #999;
 }
+
+@media (min-width: 550px) and (max-width: 900px) {
+  .modal {
+    width: 75vw;
+  }
+}
+
+@media (max-width: 549px) {
+  .modal {
+    width: 100vw;
+  }
+}

@@ -18,3 +18,15 @@
   line-height: 1.1;
   letter-spacing: 3px;
 }
+
+@media (min-width: 550px) and (max-width: 900px) {
+  .end-modal {
+    width: 75vw;
+  }
+}
+
+@media (max-width: 549px) {
+  .end-modal {
+    width: 100vw;
+  }
+}
