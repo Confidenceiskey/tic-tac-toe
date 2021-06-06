@@ -32,7 +32,7 @@ At the end, I implemented the minimax algorithm to get the computer to make the 
 
 #### Preview
 
-Check out the [live version](https://davidpnowak.com/p/tic-tac-toe/)
+Check out my live [tic tac toe game online](https://davidpnowak.com/p/tic-tac-toe/)!
 
 ![Screenshot of my tic tac toe game built in React](https://confidenceiskey.github.io/codepenimg/tictactoe.jpeg "Screenshot of my tic tac toe React App")
 
